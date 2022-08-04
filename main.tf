@@ -52,7 +52,7 @@ resource "aws_db_instance" "default" {
 }
 
 module "secrets_rotator" {
-  source = "./secret_rotator"
+  source = "./postgresql_secrets_rotator"
 
   account_id    = "050072676240"
   function_name = "${local.name}_secrets_rotator"
