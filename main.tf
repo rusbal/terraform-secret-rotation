@@ -1,9 +1,11 @@
 locals {
   password = "init-secret-pass"
+  name     = "db-test-123"
 }
 
 # aws_db_instance.default
 resource "aws_db_instance" "default" {
+  identifier                            = local.name
   allocated_storage                     = 20
   auto_minor_version_upgrade            = true
   availability_zone                     = "us-west-2d"
@@ -19,7 +21,6 @@ resource "aws_db_instance" "default" {
   engine                                = "postgres"
   engine_version                        = "14.2"
   iam_database_authentication_enabled   = false
-  identifier                            = "database-generated"
   instance_class                        = "db.t3.micro"
   iops                                  = 0
   kms_key_id                            = "arn:aws:kms:us-west-2:050072676240:key/70e56086-4c7b-4d99-9b36-de4d673b315d"
@@ -48,4 +49,12 @@ resource "aws_db_instance" "default" {
   ]
 
   timeouts {}
+}
+
+module "secrets_rotator" {
+  source = "./secret_rotator"
+
+  account_id    = "050072676240"
+  function_name = local.name
+  region        = "us-west-2"
 }
