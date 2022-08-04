@@ -55,6 +55,6 @@ module "secrets_rotator" {
   source = "./secret_rotator"
 
   account_id    = "050072676240"
-  function_name = local.name
+  function_name = "${local.name}_secrets_rotator"
   region        = "us-west-2"
 }
