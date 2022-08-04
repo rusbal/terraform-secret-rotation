@@ -51,13 +51,6 @@ resource "aws_iam_role" "lambda" {
             Service = "lambda.amazonaws.com"
           }
         },
-        {
-          Action = "sts:AssumeRole"
-          Effect = "Allow"
-          Principal = {
-            Service = "secretsmanager.amazonaws.com"
-          }
-        },
       ]
       Version = "2012-10-17"
     }

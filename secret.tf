@@ -39,7 +39,7 @@ resource "aws_lambda_function" "secret" {
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
   role             = aws_iam_role.lambda.arn
-  source_code_hash = "XjmHzGU8aSHkS27BBAI4VZqX+aS2v8ObY2biY4nXKZU="
+  source_code_hash = filebase64sha256("lambda.zip")
   timeout          = 30
   filename         = "lambda.zip"
 
@@ -49,4 +49,11 @@ resource "aws_lambda_function" "secret" {
       "SECRETS_MANAGER_ENDPOINT" = "https://secretsmanager.us-west-2.amazonaws.com"
     }
   }
+}
+
+resource "aws_lambda_permission" "allow_secret_manager_call_lambda" {
+  function_name = aws_lambda_function.secret.function_name
+  statement_id  = "AllowExecutionSecretManager"
+  action        = "lambda:InvokeFunction"
+  principal     = "secretsmanager.amazonaws.com"
 }
