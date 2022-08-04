@@ -1,6 +1,6 @@
 # aws_secretsmanager_secret.db:
 resource "aws_secretsmanager_secret" "db" {
-  name     = "postgres-password"
+  name     = "postgres-password-generated"
   tags     = {}
   tags_all = {}
 }
@@ -32,17 +32,24 @@ resource "aws_secretsmanager_secret_rotation" "db" {
   }
 }
 
+# data.archive_file.lambda:
+data "archive_file" "lambda" {
+  type        = "zip"
+  source_dir  = "lambda"
+  output_path = "generated_lambda.zip"
+}
+
 # aws_lambda_function.secret:
 resource "aws_lambda_function" "secret" {
   description      = "Rotates a Secrets Manager secret for Amazon RDS PostgreSQL credentials using the single user rotation strategy."
-  function_name    = "aws_lambda_function_db"
+  function_name    = "aws_lambda_function_db_generated"
   handler          = "lambda_function.lambda_handler"
   architectures    = ["x86_64"]
   runtime          = "python3.7"
   role             = aws_iam_role.lambda.arn
-  source_code_hash = filebase64sha256("lambda.zip")
+  source_code_hash = filebase64sha256(data.archive_file.lambda.output_path)
   timeout          = 30
-  filename         = "lambda.zip"
+  filename         = data.archive_file.lambda.output_path
 
   environment {
     variables = {

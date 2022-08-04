@@ -19,7 +19,7 @@ resource "aws_db_instance" "default" {
   engine                                = "postgres"
   engine_version                        = "14.2"
   iam_database_authentication_enabled   = false
-  identifier                            = "database-1"
+  identifier                            = "database-generated"
   instance_class                        = "db.t3.micro"
   iops                                  = 0
   kms_key_id                            = "arn:aws:kms:us-west-2:050072676240:key/70e56086-4c7b-4d99-9b36-de4d673b315d"
