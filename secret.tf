@@ -33,8 +33,8 @@ resource "aws_secretsmanager_secret_rotation" "db" {
 # data.archive_file.lambda:
 data "archive_file" "lambda" {
   type        = "zip"
-  source_dir  = "lambda"
-  output_path = "generated_lambda.zip"
+  source_dir  = "lambda/source"
+  output_path = "lambda/generated_lambda.zip"
 }
 
 # aws_lambda_function.secret:
