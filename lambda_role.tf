@@ -22,14 +22,6 @@ resource "aws_iam_role" "lambda" {
   ]
   max_session_duration = 3600
   path                 = "/"
-  tags = {
-    "SecretsManagerLambda" = "Rotation"
-    "lambda:createdBy"     = "SAM"
-  }
-  tags_all = {
-    "SecretsManagerLambda" = "Rotation"
-    "lambda:createdBy"     = "SAM"
-  }
 
   inline_policy {
     name = "SecretsManagerRDSPostgreSQLRotationSingleUserRolePolicy0"
@@ -62,11 +54,6 @@ resource "aws_iam_role" "lambda" {
               "secretsmanager:PutSecretValue",
               "secretsmanager:UpdateSecretVersionStage",
             ]
-            Condition = {
-              StringEquals = {
-                "secretsmanager:resource/AllowRotationLambdaArn" = "arn:aws:lambda:us-west-2:050072676240:function:SecretsManagerpostgres-rotation-lambda"
-              }
-            }
             Effect   = "Allow"
             Resource = "arn:aws:secretsmanager:us-west-2:050072676240:secret:*"
           },
