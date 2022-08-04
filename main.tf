@@ -1,6 +1,6 @@
 locals {
   password = "init-secret-pass"
-  name     = "db-test-123"
+  name     = "database-abc"
 }
 
 # aws_db_instance.default
