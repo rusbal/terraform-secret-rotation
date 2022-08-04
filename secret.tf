@@ -37,6 +37,7 @@ resource "aws_lambda_function" "secret" {
   description      = "Rotates a Secrets Manager secret for Amazon RDS PostgreSQL credentials using the single user rotation strategy."
   function_name    = "aws_lambda_function_db"
   handler          = "lambda_function.lambda_handler"
+  architectures    = ["x86_64"]
   runtime          = "python3.7"
   role             = aws_iam_role.lambda.arn
   source_code_hash = filebase64sha256("lambda.zip")
