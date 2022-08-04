@@ -1,8 +1,6 @@
 # aws_secretsmanager_secret.db:
 resource "aws_secretsmanager_secret" "db" {
   name     = "postgres-password-generated"
-  tags     = {}
-  tags_all = {}
 }
 
 # aws_secretsmanager_secret_version.version:
