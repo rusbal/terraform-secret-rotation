@@ -19,3 +19,13 @@ resource "aws_secretsmanager_secret_version" "raymond" {
     ignore_changes = [secret_string]
   }
 }
+
+# aws_secretsmanager_secret_rotation.db:
+resource "aws_secretsmanager_secret_rotation" "raymond" {
+  secret_id           = aws_secretsmanager_secret.raymond.id
+  rotation_lambda_arn = aws_lambda_function.secret.arn
+
+  rotation_rules {
+    automatically_after_days = 30
+  }
+}
